@@ -1,3 +1,3 @@
 # Frontend_examen_final
 
-Despliegue: 
+Despliegue: No se pudo desplegar.
