@@ -25,7 +25,7 @@ const Dashboard = () => {
         <div className='md:flex md:min-h-screen'>
             <div className={`md:w-1/5 bg-gray-800 px-5 py-4 rounded-lg mt-5 mb-5 ml-5 ${sidebarWide ? 'md:w-1/4' : 'md:w-1/12'}`}>
                 <div className="flex justify-between items-center">
-                    {sidebarWide && (<h2 className='text-4xl font-black text-center text-slate-200'>React App</h2>)}
+                    {sidebarWide && (<h2 className='text-4xl font-black text-center text-slate-200'>Asistencia técnica automotriz </h2>)}
                     <button onClick={toggleSidebarWidth} className="text-white mt-4 p-2 bg-gray-700 hover:bg-gray-900 rounded-md">
                         {sidebarWide ? <FaChevronLeft /> : <FaChevronRight />}
                     </button>
@@ -37,7 +37,7 @@ const Dashboard = () => {
                             to='/dashboard/Gestion1'
                             className={`${urlActual === '/dashboard/Gestion1' ? 'text-slate-200 bg-gray-900 px-3 py-2 rounded-md text-center' : 'text-slate-600'} text-xl block mt-2 hover:text-slate-600`}
                         >
-                            {sidebarWide ? 'Modulo 1' : <FaDiceOne />}
+                            {sidebarWide ? 'Técnicos' : <FaDiceOne />}
                         </Link>
                     </li>
                     <li className="text-center">
@@ -45,7 +45,7 @@ const Dashboard = () => {
                             to='/dashboard/Gestion2'
                             className={`${urlActual === '/dashboard/Gestion2' ? 'text-slate-100 bg-gray-900 px-3 py-2 rounded-md text-center' : 'text-slate-600'} text-xl block mt-2 hover:text-slate-600`}
                         >
-                            {sidebarWide ? 'Modulo 2' : <FaDiceTwo />}
+                            {sidebarWide ? 'Clientes' : <FaDiceTwo />}
                         </Link>
                     </li>
                     <li className="text-center">
@@ -53,7 +53,7 @@ const Dashboard = () => {
                             to='/dashboard/Gestion3'
                             className={`${urlActual === '/dashboard/Gestion3' ? 'text-slate-100 bg-gray-900 px-3 py-2 rounded-md text-center' : 'text-slate-600'} text-xl block mt-2 hover:text-slate-600`}
                         >
-                            {sidebarWide ? 'Modulo 3' : <FaDiceThree />}
+                            {sidebarWide ? 'Tickets' : <FaDiceThree />}
                         </Link>
                     </li>
                 </ul>
