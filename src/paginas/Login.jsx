@@ -39,11 +39,11 @@ const Login = () => {
                 <div className="md:w-4/5 sm:w-full">
                     {Object.keys(mensaje).length > 0 && <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>}
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                        Signin to your account
+                        Bienvenido
                     </h2>
                     <div className="mt-6 border-t border-gray-400"></div>
 
-                    <small className="text-gray-400 block my-4 text-sm">Enter your nformation</small>
+                    <small className="text-gray-400 block my-4 text-sm">Ingresa tu información</small>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="-space-y-px rounded-md shadow-sm">
@@ -63,7 +63,7 @@ const Login = () => {
                                         <input
                                             {...field}
                                             type="email"
-                                            placeholder="Email address"
+                                            placeholder="Correo electrónico"
                                             maxLength={122}
                                             className={`block w-full ${errors.email ? 'border border-red-500' : 'rounded-md border border-gray-300'} focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-2 px-3 text-gray-900 placeholder:text-gray-400`}
                                         />
@@ -81,7 +81,7 @@ const Login = () => {
                                         <input
                                             {...field}
                                             type={showPassword ? 'text' : 'password'}
-                                            placeholder="Password"
+                                            placeholder="Contraseña"
                                             className={`block w-full ${errors.password ? 'border border-red-500' : 'rounded-md border border-gray-300'} focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-2 px-3 text-gray-900 placeholder:text-gray-400`}
                                         />
                                         <button
@@ -106,24 +106,24 @@ const Login = () => {
                             />
                         </div>
                         <div className="my-4">
-                            <button className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                            <button className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Iniciar sesión</button>
                         </div>
                     </form>
 
                     <div className="mt-5 text-xs border-b-2 py-4 ">
                         <div className="flex justify-end">
-                            <Link to="/forgot/id" className="text-sm text-indigo-600 hover:text-indigo-500">Forgot your password?</Link>
+                            <Link to="/forgot/id" className="text-sm text-indigo-600 hover:text-indigo-500">Olvidaste tu contraseña?</Link>
                         </div>
                     </div>
 
                     <div className="mt-3 text-sm flex justify-between items-center">
                         <p className="mt-2 text-center text-sm text-gray-600">
-                            Or{" "}
+                            O{" "}
                             <span
                                 className="font-medium text-indigo-600 hover:text-indigo-500"
                             >
-                                Don't Have an Account, Please{" "}
-                                <Link to="/register"> Register now </Link>
+                                No tienes una cuenta, por favor{" "}
+                                <Link to="/register"> - Regístrate ahora -</Link>
                             </span>
                         </p>
 

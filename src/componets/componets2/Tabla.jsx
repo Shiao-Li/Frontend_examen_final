@@ -21,7 +21,7 @@ const Tabla = () => {
   const listarPacientes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/clientes`;
       const options = {
         headers: {
           "Content-Type": "application/json",
