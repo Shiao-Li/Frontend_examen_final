@@ -55,7 +55,7 @@ function App() {
                       <Route path="Gestion2" element={<Gestion2 />} />
                       <Route path="Gestion3" element={<Gestion3 />} />
                       <Route path="visualizar/:id" element={<Visualizar />} />
-                      <Route path="Crear1" element={<Crear1 />} />
+                      <Route path="crear1" element={<Crear1 />} />
                       <Route path="Crear2" element={<Crear2 />} />
                       <Route path="Crear3" element={<Crear3 />} />
                       <Route path="actualizar/:id" element={<Actualizar />} />
