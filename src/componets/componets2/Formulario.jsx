@@ -30,7 +30,7 @@ export const Formulario = ({ paciente }) => {
 
             // Obtener la lista actual de pacientes
             const token = localStorage.getItem("token");
-            const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes`;
+            const url = `${import.meta.env.VITE_BACKEND_URL}/clientes`;
             const options = {
                 headers: {
                     "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const Formulario = ({ paciente }) => {
 
                 if (duplicado) {
                     setMensaje({
-                        respuesta: "Ya existe un paciente con el mismo nombre y dueño.",
+                        respuesta: "Ya existe un cliente con los mismos datos registrados",
                         tipo: false,
                     });
                     return;
@@ -60,7 +60,7 @@ export const Formulario = ({ paciente }) => {
             // Solicitud al endpoint
             if (paciente?._id) {
                 const token = localStorage.getItem("token");
-                const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/actualizar/${paciente._id}`;
+                const url = `${import.meta.env.VITE_BACKEND_URL}/clientes/actualizar/${paciente._id}`;
                 const options = {
                     headers: {
                         method: "PUT",
@@ -71,9 +71,10 @@ export const Formulario = ({ paciente }) => {
                 await axios.put(url, trimmedData, options);
                 navigate("/dashboard/listar");
             } else {
+                console.log("aqui")
                 const token = localStorage.getItem("token");
                 trimmedData.id = auth._id;
-                const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/registro`;
+                const url = `${import.meta.env.VITE_BACKEND_URL}/clientes/registro`;
                 const options = {
                     headers: {
                         "Content-Type": "application/json",
@@ -84,10 +85,11 @@ export const Formulario = ({ paciente }) => {
                 navigate("/dashboard/listar");
             }
         } catch (error) {
-            setMensaje({ respuesta: error.response.data.msg, tipo: false });
-            setTimeout(() => {
-                setMensaje({});
-            }, 3000);
+            if (error.response && error.response.data && error.response.data.msg) {
+                setMensaje({ respuesta: error.response.data.msg, tipo: false });
+            } else {
+                console.error("Error:", error);
+            }
         }
     };
 
@@ -120,7 +122,7 @@ export const Formulario = ({ paciente }) => {
                                 type="number"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu cedula'
+                                placeholder='Ingresa la cedula del cliente'
                             />
                             {fieldState.error && (
                                 <p className="text-red-500 text-sm">{fieldState.error.message}</p>
@@ -151,7 +153,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu nombre'
+                                placeholder='Ingresa el nombre del cliente'
                                 maxLength={40}
                             />
                             {fieldState.error && (
@@ -183,7 +185,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu apellido'
+                                placeholder='Ingresa el apellido del cliente'
                                 maxLength={40}
                             />
                             {fieldState.error && (
@@ -215,7 +217,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu ciudad'
+                                placeholder='Ingresa la ciudad del cliente'
                                 maxLength={40}
                             />
                             {fieldState.error && (
@@ -248,7 +250,7 @@ export const Formulario = ({ paciente }) => {
                                 type="email"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu email'
+                                placeholder='Ingresa el email del cliente'
                                 maxLength={60}
                             />
                             {fieldState.error && (
@@ -276,7 +278,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu direccion'
+                                placeholder='Ingresa la direccion del cliente'
                                 maxLength={120}
                             />
                             {fieldState.error && (
@@ -312,7 +314,7 @@ export const Formulario = ({ paciente }) => {
                                 type="number"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa tu celular'
+                                placeholder='Ingresa el celular del cliente'
                             />
                             {fieldState.error && (
                                 <p className="text-red-500 text-sm">{fieldState.error.message}</p>
@@ -353,7 +355,7 @@ export const Formulario = ({ paciente }) => {
                     htmlFor='concesionario:'
                     className='text-gray-700 uppercase font-bold text-sm'>Sucursal del concesionario: </label>
                 <Controller
-                    name='direccion'
+                    name='concesionario'
                     control={control}
                     defaultValue=''
                     rules={{
@@ -366,7 +368,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='Ingresa la ucursal del concesionario'
+                                placeholder='Ingresa la sucursal del concesionario'
                                 maxLength={120}
                             />
                             {fieldState.error && (

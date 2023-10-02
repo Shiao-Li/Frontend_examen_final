@@ -17,11 +17,12 @@ const Tabla = () => {
   const navigate = useNavigate();
   const [pacientes, setPacientes] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const listarPacientes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/clientes`;
       const options = {
         headers: {
           "Content-Type": "application/json",
@@ -47,8 +48,7 @@ const Tabla = () => {
       );
       if (confirmar) {
         const token = localStorage.getItem("token");
-        const url = `${import.meta.env.VITE_BACKEND_URL
-          }/paciente/eliminar/${id}`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/clientes/eliminar/${id}`;
         const headers = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -71,7 +71,6 @@ const Tabla = () => {
       {
         Header: "N°",
         accessor: (row, index) => index + 1,
-        // Puedes utilizar un accessor personalizado para la numeración
       },
       {
         Header: "Nombre",
@@ -86,46 +85,37 @@ const Tabla = () => {
         accessor: "email",
       },
       {
-        Header: "Celular",
-        accessor: "celular",
-      },
-      {
-        Header: "Estado",
-        accessor: "estado",
-        Cell: ({ value }) => (
-          <span className={`bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ${value ? 'visible' : 'invisible'}`}>
-            {value ? 'activo' : ''}
-          </span>
-        ),
-      },
-      {
         Header: "Acciones",
         accessor: "acciones",
         Cell: ({ row }) => (
           <div className="py-2 text-center">
-            <MdNoteAdd
-              className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-              onClick={() =>
-                navigate(`/dashboard/visualizar/${row.original._id}`)
-              }
-            />
-            <MdInfo
-              className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-              onClick={() =>
-                navigate(`/dashboard/actualizar/${row.original._id}`)
-              }
-            />
-            <MdDeleteForever
-              className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-              onClick={() => {
-                handleDelete(row.original._id);
-              }}
-            />
+            {selectedRows.includes(row.id) && (
+              <>
+                <MdNoteAdd
+                  className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                  onClick={() =>
+                    navigate(`/dashboard/visualizar/${row.original._id}`)
+                  }
+                />
+                <MdInfo
+                  className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                  onClick={() =>
+                    navigate(`/dashboard/actualizar/${row.original._id}`)
+                  }
+                />
+                <MdDeleteForever
+                  className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                  onClick={() => {
+                    handleDelete(row.original._id);
+                  }}
+                />
+              </>
+            )}
           </div>
         ),
       },
     ],
-    []
+    [selectedRows]
   );
 
   const {
@@ -201,10 +191,24 @@ const Tabla = () => {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {page.map((row) => { // Cambia rows a page
+              {page.map((row) => {
                 prepareRow(row);
+                const isSelected = selectedRows.includes(row.id);
+
                 return (
-                  <tr {...row.getRowProps()} className="border-b hover:bg-gray-300 text-center">
+                  <tr
+                    {...row.getRowProps()}
+                    className={`border-b hover:bg-gray-300 text-center ${
+                      isSelected ? "bg-blue-200" : ""
+                    }`}
+                    onClick={() => {
+                      if (isSelected) {
+                        setSelectedRows(selectedRows.filter((id) => id !== row.id));
+                      } else {
+                        setSelectedRows([...selectedRows, row.id]);
+                      }
+                    }}
+                  >
                     {row.cells.map((cell) => {
                       return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                     })}

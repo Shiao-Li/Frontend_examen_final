@@ -30,7 +30,7 @@ export const Formulario = ({ paciente }) => {
       
           // Obtener la lista actual de pacientes
           const token = localStorage.getItem("token");
-          const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes`;
+          const url = `${import.meta.env.VITE_BACKEND_URL}/tecnicos`;
           const options = {
             headers: {
               "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const Formulario = ({ paciente }) => {
       
             if (duplicado) {
               setMensaje({
-                respuesta: "Ya existe un paciente con el mismo nombre y dueño.",
+                respuesta: "Ya existe un tecnico con los mismos datos.",
                 tipo: false,
               });
               return;
@@ -60,7 +60,7 @@ export const Formulario = ({ paciente }) => {
           // Solicitud al endpoint
           if (paciente?._id) {
             const token = localStorage.getItem("token");
-            const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/actualizar/${paciente._id}`;
+            const url = `${import.meta.env.VITE_BACKEND_URL}/tecnicos/actualizar/${paciente._id}`;
             const options = {
               headers: {
                 method: "PUT",
@@ -73,7 +73,7 @@ export const Formulario = ({ paciente }) => {
           } else {
             const token = localStorage.getItem("token");
             trimmedData.id = auth._id;
-            const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/registro`;
+            const url = `${import.meta.env.VITE_BACKEND_URL}/tecnicos/registro`;
             const options = {
               headers: {
                 "Content-Type": "application/json",
@@ -96,10 +96,10 @@ export const Formulario = ({ paciente }) => {
             {Object.keys(mensaje).length > 0 && <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>}
             <div>
                 <label
-                    htmlFor='nombre:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Nombre de la mascota: </label>
+                    htmlFor='Nombre:'
+                    className='text-gray-700 uppercase font-bold text-sm'>Nombre: </label>
                 <Controller
-                    name='nombre'
+                    name='Nombre'
                     control={control}
                     defaultValue=''
                     rules={{
@@ -116,7 +116,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='nombre de la mascota'
+                                placeholder='Ingresa el nombre del técnico'
                                 maxLength={40}
                             />
                             {fieldState.error && (
@@ -128,10 +128,10 @@ export const Formulario = ({ paciente }) => {
             </div>
             <div>
                 <label
-                    htmlFor='propietario:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Nombre del propietario: </label>
+                    htmlFor='Apellido:'
+                    className='text-gray-700 uppercase font-bold text-sm'>Apellido: </label>
                 <Controller
-                    name='propietario'
+                    name='Apellido'
                     control={control}
                     defaultValue=''
                     rules={{
@@ -148,7 +148,7 @@ export const Formulario = ({ paciente }) => {
                                 type="text"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='nombre del propietario'
+                                placeholder='Ingresa el apellido del técnico'
                                 maxLength={40}
                             />
                             {fieldState.error && (
@@ -160,29 +160,150 @@ export const Formulario = ({ paciente }) => {
             </div>
             <div>
                 <label
-                    htmlFor='email:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Email: </label>
+                    htmlFor='cedula:'
+                    className='text-gray-700 uppercase font-bold text-sm'>cedula: </label>
                 <Controller
-                    name='email'
+                    name='cedula'
                     control={control}
                     defaultValue=''
                     rules={{
                         required: 'Este campo es obligatorio',
                         pattern: {
-                            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                            message: 'Formato de correo electrónico inválido',
+                            value: /^[0-9]*$/,
+                            message: 'Ingresa solo números en este campo',
                         },
-                        validate: value => value.trim() === value
+                        maxLength: {
+                            value: 10,
+                            message: 'El número de cedula debe tener un máximo de 10 dígitos',
+                        },
                     }}
                     render={({ field, fieldState }) => (
                         <div>
                             <input
                                 {...field}
-                                type="email"
+                                type="number"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='email del propietario'
-                                maxLength={60}
+                                placeholder='Ingresa la cedula del técnico'
+                            />
+                            {fieldState.error && (
+                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                            )}
+                        </div>
+                    )}
+                />
+            </div>
+            <div>
+                <label
+                    htmlFor='Fecha nacimiento:'
+                    className='text-gray-700 uppercase font-bold text-sm'>Fecha nacimiento: </label>
+                <Controller
+                    name='Fecha nacimiento'
+                    control={control}
+                    defaultValue=''
+                    rules={{
+                        required: 'Este campo es obligatorio',
+                    }}
+                    render={({ field, fieldState }) => (
+                        <div>
+                            <input
+                                {...field}
+                                type="date"
+                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
+                                    }`}
+                                placeholder='Ingresa la fecha de nacimiento del técnico'
+                            />
+                            {fieldState.error && (
+                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                            )}
+                        </div>
+                    )}
+                />
+            </div>
+            <div>
+                <label
+                    htmlFor='genero:'
+                    className='text-gray-700 uppercase font-bold text-sm'>Genero: </label>
+                <Controller
+                    name='genero'
+                    control={control}
+                    defaultValue=''
+                    rules={{
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                            value: /^[A-Za-z\s]+$/,
+                            message: 'Ingresa solo letras en este campo',
+                        }
+                    }}
+                    render={({ field, fieldState }) => (
+                        <div>
+                            <input
+                                {...field}
+                                type="text"
+                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
+                                    }`}
+                                placeholder='Ingresa el genero del técnico'
+                                maxLength={40}
+                            />
+                            {fieldState.error && (
+                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                            )}
+                        </div>
+                    )}
+                />
+            </div>
+            <div>
+                <label
+                    htmlFor='ciudad:'
+                    className='text-gray-700 uppercase font-bold text-sm'>ciudad: </label>
+                <Controller
+                    name='ciudad'
+                    control={control}
+                    defaultValue=''
+                    rules={{
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                            value: /^[A-Za-z\s]+$/,
+                            message: 'Ingresa solo letras en este campo',
+                        }
+                    }}
+                    render={({ field, fieldState }) => (
+                        <div>
+                            <input
+                                {...field}
+                                type="text"
+                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
+                                    }`}
+                                placeholder='Ingresa la ciudad del técnico'
+                                maxLength={40}
+                            />
+                            {fieldState.error && (
+                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                            )}
+                        </div>
+                    )}
+                />
+            </div>
+            <div>
+                <label
+                    htmlFor='direccion:'
+                    className='text-gray-700 uppercase font-bold text-sm'>direccion: </label>
+                <Controller
+                    name='direccion'
+                    control={control}
+                    defaultValue=''
+                    rules={{
+                        required: "Este campo es obligatorio"
+                    }}
+                    render={({ field, fieldState }) => (
+                        <div>
+                            <input
+                                {...field}
+                                type="text"
+                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
+                                    }`}
+                                placeholder='Ingresa la direccion del técnico'
+                                maxLength={120}
                             />
                             {fieldState.error && (
                                 <p className="text-red-500 text-sm">{fieldState.error.message}</p>
@@ -217,7 +338,7 @@ export const Formulario = ({ paciente }) => {
                                 type="number"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='celular del propietario'
+                                placeholder='Ingresa el celular del técnico'
                             />
                             {fieldState.error && (
                                 <p className="text-red-500 text-sm">{fieldState.error.message}</p>
@@ -228,31 +349,29 @@ export const Formulario = ({ paciente }) => {
             </div>
             <div>
                 <label
-                    htmlFor='convencional:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Convencional: </label>
+                    htmlFor='email:'
+                    className='text-gray-700 uppercase font-bold text-sm'>Email: </label>
                 <Controller
-                    name='convencional'
+                    name='email'
                     control={control}
                     defaultValue=''
                     rules={{
                         required: 'Este campo es obligatorio',
                         pattern: {
-                            value: /^[0-9]*$/,
-                            message: 'Ingresa solo números en este campo',
+                            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Formato de correo electrónico inválido',
                         },
-                        maxLength: {
-                            value: 15,
-                            message: 'El número de celular debe tener un máximo de 15 dígitos',
-                        },
+                        validate: value => value.trim() === value
                     }}
                     render={({ field, fieldState }) => (
                         <div>
                             <input
                                 {...field}
-                                type="number"
+                                type="email"
                                 className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
                                     }`}
-                                placeholder='convencional del propietario'
+                                placeholder='Ingresa el email del técnico'
+                                maxLength={60}
                             />
                             {fieldState.error && (
                                 <p className="text-red-500 text-sm">{fieldState.error.message}</p>
@@ -261,61 +380,6 @@ export const Formulario = ({ paciente }) => {
                     )}
                 />
             </div>
-            <div>
-                <label
-                    htmlFor='Salida:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Fecha de salida: </label>
-                <Controller
-                    name='salida'
-                    control={control}
-                    defaultValue=''
-                    rules={{
-                        required: 'Este campo es obligatorio',
-                    }}
-                    render={({ field, fieldState }) => (
-                        <div>
-                            <input
-                                {...field}
-                                type="date"
-                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
-                                    }`}
-                                placeholder='salida'
-                            />
-                            {fieldState.error && (
-                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
-                            )}
-                        </div>
-                    )}
-                />
-            </div>
-            <div>
-                <label
-                    htmlFor='sintomas:'
-                    className='text-gray-700 uppercase font-bold text-sm'>Síntomas: </label>
-                <Controller
-                    name='sintomas'
-                    control={control}
-                    defaultValue=''
-                    rules={{
-                        required: 'Este campo es obligatorio'
-                    }}
-                    render={({ field, fieldState }) => (
-                        <div>
-                            <textarea
-                                {...field}
-                                className={`border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5 ${fieldState.invalid ? 'border-red-500' : ''
-                                    }`}
-                                placeholder='Ingrese los síntomas de la mascota'
-                                maxLength={150}
-                            />
-                            {fieldState.error && (
-                                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
-                            )}
-                        </div>
-                    )}
-                />
-            </div>
-
             <input
                 type="submit"
                 className='bg-gray-600 w-full p-3 text-slate-300 uppercase font-bold rounded-lg hover:bg-gray-900 cursor-pointer transition-all'

@@ -32,7 +32,7 @@ export const Forgot = () => {
           )}
 
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Forgot your password
+            Olvidaste tu contraseña
           </h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
