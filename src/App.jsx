@@ -12,8 +12,8 @@ import Gestion2 from "./paginas/Gestion2";
 import Gestion3 from "./paginas/Gestion3";
 import Visualizar from "./paginas/Visualizar";
 import Crear1 from "./paginas/Crear1";
-import Crear2 from "./paginas/crear2";
-import Crear3 from "./paginas/crear3";
+import Crear2 from "./paginas/Crear2";
+import Crear3 from "./paginas/Crear3";
 import Actualizar from "./paginas/Actualizar";
 import Perfil from "./paginas/Perfil";
 import Inicio from "./paginas/Inicio"
@@ -55,7 +55,7 @@ function App() {
                       <Route path="Gestion2" element={<Gestion2 />} />
                       <Route path="Gestion3" element={<Gestion3 />} />
                       <Route path="visualizar/:id" element={<Visualizar />} />
-                      <Route path="crear1" element={<Crear1 />} />
+                      <Route path="Crear1" element={<Crear1 />} />
                       <Route path="Crear2" element={<Crear2 />} />
                       <Route path="Crear3" element={<Crear3 />} />
                       <Route path="actualizar/:id" element={<Actualizar />} />
