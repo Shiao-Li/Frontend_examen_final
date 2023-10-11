@@ -11,7 +11,7 @@ import Gestion1 from "./paginas/Gestion1";
 import Gestion2 from "./paginas/Gestion2";
 import Gestion3 from "./paginas/Gestion3";
 import Visualizar from "./paginas/Visualizar";
-import Crear1 from "./paginas/crear1";
+import Crear1 from "./paginas/Crear1";
 import Crear2 from "./paginas/crear2";
 import Crear3 from "./paginas/crear3";
 import Actualizar from "./paginas/Actualizar";
